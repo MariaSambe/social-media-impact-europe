@@ -1,1 +1,36 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
+# Carregar os dados
+df = pd.read_csv('../data/dados_redes_sociais.csv')
+
+# Gráfico 1: Tempo médio por país
+plt.figure(figsize=(10,6))
+sns.barplot(x='pais', y='tempo_medio', data=df)
+plt.title('Tempo médio diário nas redes sociais por país')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+# Gráfico 2: Correlação entre tempo online e sintomas psicológicos
+sns.scatterplot(x='tempo_medio', y='sintomas_ansiedade', hue='genero', data=df)
+plt.title('Correlação entre tempo online e sintomas de ansiedade')
+plt.show()
+
+# Gráfico 3: Diferenças entre géneros
+sns.boxplot(x='genero', y='tempo_medio', data=df)
+plt.title('Diferença de tempo médio entre géneros')
+plt.show()
+
+# Regressão linear simples
+from sklearn.linear_model import LinearRegression
+
+X = df[['tempo_medio']]
+y = df['sintomas_ansiedade']
+
+modelo = LinearRegression()
+modelo.fit(X, y)
+
+print("Coeficiente:", modelo.coef_[0])
+print("Intercepto:", modelo.intercept_)
