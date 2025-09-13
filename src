@@ -1,1 +1,8 @@
+import pandas as pd
 
+def limpar_dados(caminho_csv):
+    df = pd.read_csv(caminho_csv)
+    df = df.dropna()
+    df = df[df['idade'] <= 25]  # filtrar jovens
+    df = df[df['tempo_medio'] > 0]  # remover valores inválidos
+    return df
